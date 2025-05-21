@@ -12,7 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000/api', // La URL base de tu API
+        url: 'http://localhost:3000/api-docs', // La URL base de tu API
       },
     ],
   },

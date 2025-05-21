@@ -1,8 +1,11 @@
 
 import { Request, Response } from 'express';
 import { buscarUsuarioPorCredenciales, cambiarContrasena, buscarUsuarioPorCorreo, obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario } from '../operator/DbOperator';
-import { generarToken } from '../utilidades/constantes';
+import { generarToken, uploadPath } from '../utilidades/constantes';
 import { Usuario } from '../interfaces/InterfaceUsuarios';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 
 /**
  * @summary Método que permite iniciar sesión.
@@ -140,3 +143,21 @@ export const obtenerTodosUsuarios = async (req: Request, res: Response): Promise
     }
   };
   
+
+  // Configuración de multer para guardar los archivos
+  export const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Nombre único
+  }
+});
+
+// Middleware para crear la carpeta si no existe
+export const ensureUploadsFolderExists = (req: Request, res: Response, next: Function) => {
+  if (!fs.existsSync(uploadPath)) {
+    fs.mkdirSync(uploadPath, { recursive: true });
+  }
+  next();
+};

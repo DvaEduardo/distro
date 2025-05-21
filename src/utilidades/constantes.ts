@@ -1,4 +1,7 @@
+import path from "path";
 import { UsuarioRol } from "../interfaces/InterfaceUsuarios";
+import multer from "multer";
+import { storage } from "../operator/functions";
 
 
 export const JWT_SECRET = '$2y$10$MNvvAcdHj5/NAEjwNSKR7eaggKtop8Lmz40oxmmp.sL4ldEGCSImW';
@@ -20,3 +23,8 @@ export const generarToken = (usuario: UsuarioRol): string => {
     }, JWT_SECRET);
     return token;
   };
+
+// Carpeta donde se guardarán los archivos
+export const uploadPath = path.join(__dirname, '../../Archivos');
+
+export const upload = multer({ storage });

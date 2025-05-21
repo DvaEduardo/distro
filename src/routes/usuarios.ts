@@ -4,7 +4,7 @@ const router = Router();
 
 /**
  * @swagger
- * /login:
+ *  /login:
  *   post:
  *     summary: Iniciar sesión
  *     description: Verifica las credenciales del usuario y devuelve un token JWT si son correctas.
