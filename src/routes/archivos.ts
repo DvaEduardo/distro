@@ -3,11 +3,16 @@ import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 
+<<<<<<< HEAD
 
 const router = Router();
 // const uploadPath = path.join(__dirname, '../uploads');
 const uploadPath = path.join(__dirname, '../../files');
 
+=======
+const router = Router();
+const uploadPath = path.join(__dirname, '../uploads');
+>>>>>>> c675505ede9347725d52685de3c96b9d2bbbea6f
 
 // Configuración de multer para guardar los archivos
 const storage = multer.diskStorage({
@@ -27,6 +32,10 @@ const ensureUploadsFolderExists = (req: Request, res: Response, next: Function) 
   }
   next();
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> c675505ede9347725d52685de3c96b9d2bbbea6f
 /**
  * @swagger
  * /archivos/guardar:
@@ -64,7 +73,11 @@ const ensureUploadsFolderExists = (req: Request, res: Response, next: Function) 
  *                       example: archivo
  *                     originalname:
  *                       type: string
+<<<<<<< HEAD
  *                       example: ejemplo.png
+=======
+ *                       example: 
+>>>>>>> c675505ede9347725d52685de3c96b9d2bbbea6f
  *                     encoding:
  *                       type: string
  *                       example: 7bit
@@ -88,6 +101,7 @@ const ensureUploadsFolderExists = (req: Request, res: Response, next: Function) 
  *       500:
  *         description: Error al subir el archivo
  */
+<<<<<<< HEAD
 router.get('/buscar/:nombre', (req: Request, res: Response) => {
   const { nombre } = req.params;
   const filePath = path.join(uploadPath, nombre);
@@ -99,6 +113,20 @@ router.get('/buscar/:nombre', (req: Request, res: Response) => {
   }
 });
 
+=======
+router.post('/guardar', ensureUploadsFolderExists, upload.single('archivo'), (req: Request, res: Response) => {
+  const file = req.file;
+  
+  if (!file) {
+    return res.status(400).json({ error: 'No se ha subido ningún archivo' });
+  }
+
+  res.status(200).json({
+    message: 'Archivo subido exitosamente',
+    file
+  });
+});
+>>>>>>> c675505ede9347725d52685de3c96b9d2bbbea6f
 
 /**
  * @swagger
@@ -115,12 +143,20 @@ router.get('/buscar/:nombre', (req: Request, res: Response) => {
  *         description: El nombre del archivo que se busca.
  *         schema:
  *           type: string
+<<<<<<< HEAD
  *           example: ejemplo.png
+=======
+ *           example: 
+>>>>>>> c675505ede9347725d52685de3c96b9d2bbbea6f
  *     responses:
  *       200:
  *         description: Archivo encontrado
  *         content:
+<<<<<<< HEAD
  *           image/png:
+=======
+ *           application/octet-stream:
+>>>>>>> c675505ede9347725d52685de3c96b9d2bbbea6f
  *             schema:
  *               type: string
  *               format: binary
@@ -155,7 +191,11 @@ router.get('/buscar/:nombre', (req: Request, res: Response) => {
  *         description: El nombre del archivo que se desea eliminar.
  *         schema:
  *           type: string
+<<<<<<< HEAD
  *           example: ejemplo.png
+=======
+ *           example: 
+>>>>>>> c675505ede9347725d52685de3c96b9d2bbbea6f
  *     responses:
  *       200:
  *         description: Archivo eliminado exitosamente
@@ -177,8 +217,17 @@ router.delete('/eliminar/:nombre', (req: Request, res: Response) => {
   const filePath = path.join(uploadPath, nombre);
 
   if (fs.existsSync(filePath)) {
+<<<<<<< HEAD
     fs.unlinkSync(filePath);
     res.status(200).json({ message: 'Archivo eliminado exitosamente' });
+=======
+    try {
+      fs.unlinkSync(filePath);
+      res.status(200).json({ message: 'Archivo eliminado exitosamente' });
+    } catch (error) {
+      res.status(500).json({ error: 'Error al eliminar el archivo' });
+    }
+>>>>>>> c675505ede9347725d52685de3c96b9d2bbbea6f
   } else {
     res.status(404).json({ error: 'Archivo no encontrado' });
   }
